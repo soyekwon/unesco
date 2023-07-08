@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UNESCO</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+    #version {
+      background-color:black; 
+      color:white; 
+      opacity:0.7; 
+      cursor:pointer; 
+      font-weight:800; 
+      border:none; 
+      padding:6px 14px; 
+      position:fixed; 
+      top:8%; 
+      right:10%;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    function version() {
+      var ver = document.getElementById('version');
+      var title1 = document.getElementById('title1');
+      var content1 = document.getElementById('content1');
+      var nav1 = document.getElementById('nav1');
+      var title2 = document.getElementById('title2');
+      var content2 = document.getElementById('content2');
+      var nav2 = document.getElementById('nav2');
+      var title3 = document.getElementById('title3');
+      var content3 = document.getElementById('content3');
+      var nav3 = document.getElementById('nav3');
+      if (ver.innerText == "Kor") {
+          ver.innerText = "Eng";  
+          title1.innerText = "세계유산";
+          nav1.innerText = "세계유산";
+          content1.innerText = "「세계유산협약」(1972)에 의거하여 유네스코 세계유산위원회가 인류 전체를 위해 보호되어야 할 뛰어난 보편적 가치(Outstanding Universal Value)가 있다고 인정하여 세계유산목록에 등재한 유산으로 문화유산, 자연유산, 복합유산으로 분류됩니다.";
+          title2.innerText ="인류무형문화유산";
+          nav2.innerText = "인류무형문화유산";
+          content2.innerText = "2003년 유네스코 무형문화유산 보호 협약에 의거하여 문화적 다양성과 창의성이 유지될 수 있도록 대표목록 또는 긴급목록에 각국의 무형유산을 등재하는 제도입니다. 2005년까지 인류구전 및 무형유산걸작이라는 명칭으로 유네스코 프로그램 사업 이었으나 지금은 세계유산과 마찬가지로 정부간 협약으로 발전되었습니다.";
+          title3.innerText ="세계기록유산";
+          nav3.innerText = "세계기록유산";
+          content3.innerText = "유네스코가 고문서 등 전 세계의 귀중한 기록물을 보존하고 활용하기 위하여 1997년부터 2년마다 세계적 가치가 있는 기록유산을 선정하는 사업으로 유산의 종류로는 서적(책)이나 문서, 편지 등 여러 종류의 동산 유산이 포함됩니다.";
+        } else {
+          ver.innerText = "Kor";
+          title1.innerText = "World Heritage";
+          nav1.innerText = "World Heritage";
+          content1.innerText = "According to the World Heritage Convention (1972), the UNESCO World Heritage Committee recognized that it has excellent universal values to be protected for mankind as a whole, and it was classified as a cultural, natural, and complex heritage.";
+          title2.innerText = "Cultural Heritage of Humanity";
+          nav2.innerText = "Cultural Heritage of Humanity";
+          content2.innerText = "In accordance with the UNESCO Convention on the Protection of Intangible Cultural Heritage in 2003, it is a system to register intangible heritage of each country on the representative list or emergency list so that cultural diversity and creativity can be maintained. Until 2005, it was a UNESCO program project under the name of a masterpiece of human salvation and intangible heritage, but now it has developed into an intergovernmental agreement like a world heritage.";
+          title3.innerText = "World Record Heritage";
+          nav3.innerText = "World Record Heritage";
+          content3.innerText = "UNESCO has selected world-renowned documentary heritage every two years since 1997 to preserve and utilize valuable records from around the world, including books, documents, and letters.";
+         
+        }
+    }
+  </script>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+    <a href="#home" class="w3-bar-item w3-button"><b>UNESCO</b></a>
+    <!-- Float links to the right. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+      <a href="#projects" class="w3-bar-item w3-button" id="nav1">세계유산</a>
+      <a href="#about" class="w3-bar-item w3-button" id="nav2">인류무형문화유산</a>
+      <a href="#contact" class="w3-bar-item w3-button" id="nav3">세계기록유산</a>
+      <a href="{% url 'map' %}"><img src="/static/map_icon.png" alt="House" width="26" style="margin-top:6px; cursor:pointer;"></a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1400px;" id="home">
+
+    <img class="w3-image" src="/static/unesco.jpg" alt="Architecture" width="1400" height="700" style="margin-top:3rem;">
+    <button id="version" onclick="version()">Eng</button>
+    <div class="w3-display-middle w3-margin-top w3-center">
+      <h1 style="color:white;">Korea's <b>UNESCO</b> Heritage</h1>
+    </div>
+
+    <div class="w3-display-left w3-padding w3-hide-small" style="width:23.5%">
+
+    {% for i in crolling_data%}
+      <div class="w3-black w3-hover-opacity w3-padding-large w3-round-large" style="height:15.2vh; margin:0.5rem;">
+        <h1 style="font-size:0.95rem; margin:3px 0;">{{i.title}}</h1>
+        <p><a href={{i.link}} style="text-decoration:none;"><button class="w3-button w3-block w3-red w3-round">Play <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <i class="fa fa-windows"></i></button></a></p>
+      </div>
+    {% endfor %}   
+
+
+
+  </div>
+
+
+
+</header>
+
+<!-- Page content -->
+<div class="w3-content w3-padding" style="max-width:1300px">
+
+  <!-- Project Section -->
+  <div class="w3-container w3-padding-8" id="projects">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b id="title1">세계유산</b></h3>
+  </div>
+  <p id="content1" style="width:97.5%; margin:0 auto 1rem auto;">「세계유산협약」(1972)에 의거하여 유네스코 세계유산위원회가 인류 전체를 위해 보호되어야 할 뛰어난 보편적 가치(Outstanding Universal Value)가 있다고 인정하여 세계유산목록에 등재한 유산으로 문화유산, 자연유산, 복합유산으로 분류됩니다.</p>
+
+  <div class="w3-row-padding">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">석굴암ㆍ불국사</div>
+        <img src="/static/1-1.jpg" alt="House"  style="width:100%; height:24.5vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">해인사 장경판전</div>
+        <img src="/static/1-2.jpg" alt="House" style="width:100%; height:24.5vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">종묘</div>
+        <img src="/static/1-3.jpg" alt="House" style="width:100%; height:24.5vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">창덕궁</div>
+        <img src="/static/1-4.jpg" alt="House"  style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+  </div>
+
+  <div class="w3-row-padding">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">화성</div>
+        <img src="/static/1-5.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">경주역사유적지구</div>
+        <img src="/static/1-6.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">고창ㆍ화순ㆍ강화 고인돌</div>
+        <img src="/static/1-7.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">제주 화산섬과 용암동굴</div>
+        <img src="/static/1-8.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+  </div>
+
+  <div class="w3-row-padding">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">조선왕릉</div>
+        <img src="/static/1-9.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">한국의 역사마을: 하회와 양동</div>
+        <img src="/static/1-10.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">남한산성</div>
+        <img src="/static/1-11.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-display-container">
+        <div class="w3-display-topleft w3-black w3-padding">백제역사유적지구</div>
+        <img src="/static/1-12.jpg" alt="House" style="width:100%; height:24vh; cursor:pointer;" class="w3-hover-opacity">
+      </div>
+  </div>
+
+
+  <!-- About Section -->
+  <div class="w3-container w3-padding-16" id="about">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16"><b id="title2">인류무형문화유산</b></h3>
+    <p style="margin:0;" id="content2">2003년 유네스코 무형문화유산 보호 협약에 의거하여 문화적 다양성과 창의성이 유지될 수 있도록 대표목록 또는 긴급목록에 각국의 무형유산을 등재하는 제도입니다. 2005년까지 인류구전 및 무형유산걸작이라는 명칭으로 유네스코 프로그램 사업 이었으나 지금은 세계유산과 마찬가지로 정부간 협약으로 발전되었습니다.
+    </p>
+  </div>
+
+  <div style="display:flex; gap:1rem; padding:1.2rem;">
+    <div class="w3-card-4" style="cursor:pointer;">
+      <img src="/static/2-1.jpg" width="230" height="150" alt="Alps">
+      <div class="w3-container w3-center">
+        <p>종묘제례 및 종묘제례악</p>
+      </div>
+    </div>
+    <div class="w3-card-4">
+      <img src="/static/2-2.jpg" width="230" height="150" alt="Alps">
+      <div class="w3-container w3-center">
+        <p>판소리</p>
+      </div>
+    </div>
+    <div class="w3-card-4">
+      <img src="/static/2-3.jpg" width="230" height="150" alt="Alps">
+      <div class="w3-container w3-center">
+        <p>강릉단오제</p>
+      </div>
+    </div>
+    <div class="w3-card-4">
+      <img src="/static/2-4.jpeg" width="230" height="150"  alt="Alps">
+      <div class="w3-container w3-center">
+        <p>강강술래</p>
+      </div>
+    </div>
+    <div class="w3-card-4">
+      <img src="/static/2-5.jpg" width="230" height="150" alt="Alps">
+      <div class="w3-container w3-center">
+        <p>남사당놀이</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="w3-container w3-padding-32" id="contact">
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">
+      <b id="title3">세계기록유산</b></h3>
+    <p id="content3">유네스코가 고문서 등 전 세계의 귀중한 기록물을 보존하고 활용하기 위하여 1997년부터 2년마다 세계적 가치가 있는 기록유산을 선정하는 사업으로 유산의 종류로는 서적(책)이나 문서, 편지 등 여러 종류의 동산 유산이 포함됩니다.</p>
+  </div>
+  
+
+</body>
+</html>
