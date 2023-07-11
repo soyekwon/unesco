@@ -7,4 +7,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", main.views.index),
     path("map/", main.views.map, name="map"),
+    path("map2/", main.views.map2, name="map2"),
 ]
