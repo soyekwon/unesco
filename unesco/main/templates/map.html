@@ -1,75 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>UNESCO</title>
+     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="utf-8">
+<title>Display a map on a webpage</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+#buttons {
+width: 50%;
+margin: 0 auto;
+}
+.button {
+display: inline-block;
+position: relative;
+cursor: pointer;
+width: 12%;
+padding: 8px;
+border-radius: 3px;
+margin-top: 10px;
+font-size: 12px;
+text-align: center;
+color: #fff;
+background: #ee8a65;
+font-family: sans-serif;
+font-weight: bold;
+}
+
+</style>
 </head>
-
 <body>
-    <div id="map" style="width:100%;height:100vh;"></div>
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e00ee7b35d9447fc1b074a96fd8ee6d0"></script>
-    <script>
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-            mapOption = { 
-                center: new kakao.maps.LatLng(37.57853462923442, 126.98081163055696), // 지도의 중심좌표
-                level: 4 // 지도의 확대 레벨
-            };
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-wide w3-padding w3-card">
+          <a href="/" class="w3-bar-item w3-button"><b>UNESCO</b></a>
+          <!-- Float links to the right. Hide them on small screens -->
+          <div class="w3-right w3-hide-small">
+            <a href="#projects" class="w3-bar-item w3-button" id="nav1">세계유산</a>
+            <a href="#about" class="w3-bar-item w3-button" id="nav2">인류무형문화유산</a>
+            <a href="#contact" class="w3-bar-item w3-button" id="nav3">세계기록유산</a>
+            <a href="{% url 'map' %}"><img src="/static/map_icon.png" alt="House" width="26" style="margin-top:6px; cursor:pointer;"></a>
+          </div>
+          <ul id="buttons">
+                <!-- <div id="map"></div> -->
+                <li id="button-kr" class="button">Korean</li>
+                <li id="button-en" class="button">English</li>
+            </ul>
+        </div>
+      </div>
 
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-        
-        // 마커를 표시할 위치와 title 객체 배열입니다 
-        var hanbokLentPos = [
-            {
-                title: '한복남', 
-                latlng: new kakao.maps.LatLng(37.57618445345127 , 126.97330066333754 )  // 한복남
-            },
-            {
-                title: '그날그한복', 
-                latlng: new kakao.maps.LatLng(37.57628484733633 , 126.9797617963153 )  // 그날그한복
-            },
-            {
-                title: '서울한복카페', 
-                latlng: new kakao.maps.LatLng(37.577501342371974, 126.98067278123015)  // 서울한복카페
-            },
-            {
-                title: '참한복',
-                latlng: new kakao.maps.LatLng(37.575430997363746, 126.97886205883063)  // 참한복
-            },
-            {
-                title: '원데이한복',
-                latlng: new kakao.maps.LatLng(37.579517913528704, 126.98474781210345)  // 원데이한복
-            },
-            {
-                title: '북촌한복',
-                latlng: new kakao.maps.LatLng(37.58121180224732, 126.98490596384195)  // 북촌한복
-            },
-            {
-                title: '금준당',
-                latlng: new kakao.maps.LatLng(37.58093651159489, 126.98148135856074)  // 금준당
-            },
-            {
-                title: '한복남',
-                latlng: new kakao.maps.LatLng(37.576096976266584, 126.99031817631781)  // 한복남
-            }
-        ];
+<div id="map"></div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoibGV3aXN5c2giLCJhIjoiY2xqNXlvYW5oMDh1YjNnbzVkNjlodDFrMSJ9.6ez-dppLkOO2PsUbMD3GnA';
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+        style: 'mapbox://styles/lewisysh/cljzmwleo001y01pqgpn8g2lx', // style URL
+        center: [128.002167, 36.526410], // starting position [lng, lat]
+        zoom: 6 // starting zoom
+    });
+    document.getElementById('buttons').addEventListener('click', (event) => {
+    const language = event.target.id.substr('button-'.length);
+    // Use setLayoutProperty to set the value of a layout property in a style layer.
+    // The three arguments are the id of the layer, the name of the layout property,
+    // and the new property value.
+    map.setLayoutProperty('country-label', 'text-field', [
+    'get',
+    `name_${language}`
+    ]);
+    });
+</script>
 
-        // 마커 이미지의 이미지 주소입니다
-        var hanbokSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-            
-        for (var i = 0; i < hanbokLentPos.length; i ++) {
-            // 마커 이미지의 이미지 크기 입니다
-            var imageSize = new kakao.maps.Size(24, 35); 
-            // 마커 이미지를 생성합니다    
-            var markerImage = new kakao.maps.MarkerImage(hanbokSrc, imageSize); 
-            // 마커를 생성합니다
-            var marker = new kakao.maps.Marker({
-                map: map, // 마커를 표시할 지도
-                position: hanbokLentPos[i].latlng, // 마커를 표시할 위치
-                title : hanbokLentPos[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                image : markerImage // 마커 이미지 
-            });
-        }
-    </script>
 </body>
 </html>
