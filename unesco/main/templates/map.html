@@ -12,6 +12,14 @@
 body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 0; width: 100%; }
 
+.marker {
+display: block;
+border: none;
+border-radius: 50%;
+cursor: pointer;
+padding: 0;
+}
+
 #buttons {
 width: 50%;
 margin: 0 auto;
@@ -64,6 +72,243 @@ font-weight: bold;
         center: [128.002167, 36.526410], // starting position [lng, lat]
         zoom: 6 // starting zoom
     });
+
+
+
+    map.on('load', () => {
+        map.addSource('places', {
+       
+    'type': 'geojson',
+    'data': {
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        '<strong>불국사.</p>'
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [129.330991, 35.789442]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        '<strong>해인사 장경판경</p>'
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [128.098762, 35.801579]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        '<strong>종묘</p>'
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [126.993923, 37.574933]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        '<strong>창덕궁</p>'
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [126.991091, 37.579422]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        "<strong>수원화성</p>"
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [127.011997, 37.287130]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        '<strong>경주역사유적지구</p>'
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [129.219026, 35.834645]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        '<strong>Muhsinah</strong><p>남한산성</p>'
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [127.179568, 37.478879]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        "<strong>A Little Night Music</strong><p>The Arlington Players' production of Stephen Sondheim's <em>A Little Night Music</em> comes to the Kogod Cradle at The Mead Center for American Theater (1101 6th Street SW) this weekend and next. 8:00 p.m.</p>"
+                },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [-77.020945, 38.878241]
+                }
+            },
+            {
+                'type': 'Feature',
+                'properties': {
+                    'description':
+                        '<strong>Truckeroo</strong><p>Truckeroo brings dozens of food trucks, live music, and games to half and M Street SE (across from Navy Yard Metro Station) today from 11:00 a.m. to 11:00 p.m.</p>'
+            },
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': [-77.007481, 38.876516]
+                }
+            }
+
+        ]
+    }
+   
+});
+
+
+// Add a layer showing the places.
+map.addLayer({
+'id': 'places',
+'type': 'circle',
+'source': 'places',
+'paint': {
+'circle-color': '#4264fb',
+'circle-radius': 6,
+'circle-stroke-width': 2,
+'circle-stroke-color': '#ffffff'
+}
+});
+ 
+// Create a popup, but don't add it to the map yet.
+const popup = new mapboxgl.Popup({
+closeButton: false,
+closeOnClick: false
+});
+
+map.on('mouseenter', 'places', (e) => {
+// Change the cursor style as a UI indicator.
+map.getCanvas().style.cursor = 'pointer';
+ 
+// Copy coordinates array.
+const coordinates = e.features[0].geometry.coordinates.slice();
+const description = e.features[0].properties.description;
+ 
+// Ensure that if the map is zoomed out such that multiple
+// copies of the feature are visible, the popup appears
+// over the copy being pointed to.
+while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+}
+ 
+// Populate the popup and set its coordinates
+// based on the feature found.
+popup.setLngLat(coordinates).setHTML(description).addTo(map);
+});
+ 
+map.on('mouseleave', 'places', () => {
+map.getCanvas().style.cursor = '';
+popup.remove();
+});
+});
+
+
+
+
+
+
+
+    const geojson = {
+    'type': 'FeatureCollection',
+    'features': [
+    {
+    'type': 'Feature',
+    'properties': {
+    'message': '불국사',
+    'href': '/',
+    'iconSize': [30, 30]
+    },
+    'geometry': {
+    'type': 'Point',
+    'coordinates': [129.330991, 35.789442]
+    }
+    },
+    
+    {
+    'type': 'Feature',
+    'properties': {
+    'message': '해인사 장경판경',
+    'iconSize': [30, 30],
+    'href': '/',
+    },
+    'geometry': {
+    'type': 'Point',
+    'coordinates': [128.098762, 35.801579]
+    }
+    },
+
+    {
+    'type': 'Feature',
+    'properties': {
+    'message': '종묘',
+    'iconSize': [30, 30],
+    'href': '/'
+    },
+    'geometry': {
+    'type': 'Point',
+    'coordinates': [126.993923, 37.574933]
+    }
+    },
+
+    {
+    'type': 'Feature',
+    'properties': {
+    'message': '창덕궁',
+    'iconSize': [30, 30],
+    'href': '/'
+    },
+    'geometry': {
+    'type': 'Point',
+    'coordinates': [126.991091, 37.579422]
+    }
+    },
+    
+    {
+    'type': 'Feature',
+    'properties': {
+    'message': '수원화성',
+    'iconSize': [30, 30],
+    'href': '/'
+    },
+    'geometry': {
+    'type': 'Point',
+    'coordinates': [127.011997, 37.287130]
+    }
+    }
+]
+};
+
     document.getElementById('buttons').addEventListener('click', (event) => {
     const language = event.target.id.substr('button-'.length);
     // Use setLayoutProperty to set the value of a layout property in a style layer.
@@ -74,6 +319,29 @@ font-weight: bold;
     `name_${language}`
     ]);
     });
+
+    for (const marker of geojson.features) {
+
+        // Create a DOM element for each marker.
+        const el = document.createElement('a');
+        const width = marker.properties.iconSize[0];
+        const height = marker.properties.iconSize[1];
+        const link = marker.properties.href
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(https://www.pngall.com/wp-content/uploads/2017/05/Map-Marker-Free-Download-PNG.png)';
+        el.style.width = `${width}px`;
+        el.style.height = `${height}px`;
+        el.style.backgroundSize = '100%';
+        el.href = `${link}`;
+        el.addEventListener('click', () => {
+        window.alert(marker.properties.message);
+        });
+        
+        // Add markers to the map.
+        new mapboxgl.Marker(el)
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map);
+}
 </script>
 
 </body>
